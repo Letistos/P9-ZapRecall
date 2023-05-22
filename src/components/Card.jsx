@@ -1,11 +1,11 @@
-import cards from "./Cards.js";
+
 import styled from 'styled-components';
 import seta_play from "../assets/seta_play.png"
-export default function Card(){
+export default function Card({index}){
     return(
         
         <FaceDownCard>
-            <h2>Pergunta 1</h2>
+            <h2>Pergunta {index+1}</h2>
             <img src={seta_play} alt="icone flashcard triângulo"/>
         </FaceDownCard>
         

@@ -1,15 +1,14 @@
 import Card from './Card.jsx';
+import cards from './Cards.js';
 import styled from 'styled-components';
 
 export default function Deck(){
     return(
         
         <StyleDeck>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+
+        {cards.map((question,i)=><Card key={cards.question} index={i}/>)}
+     
         </StyleDeck>
        
     );
@@ -20,5 +19,6 @@ const StyleDeck = styled.div`
     display:flex;
     flex-direction:column;
     align-items:center;
+    overflow:scroll;
 
 `
