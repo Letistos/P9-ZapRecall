@@ -22,7 +22,7 @@ const StyleHeader = styled.div`
     display:flex;
     align-items:center;
     justify-content:center;
-    height:30vh;
+    height:20vh;
     top:0;
     bottom:0;
     img{
