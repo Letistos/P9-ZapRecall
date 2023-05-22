@@ -7,24 +7,38 @@ import seta_virar from'../assets/seta_virar.png';
 export default function Card({index,cards}){
     const[selectCard,setSelectedCard] = useState(false)
     const[turnCard,setTurnCard] = useState(false)
+    const[finishedCard,setFinishedCard] = useState(false)
+    function seeQuestion (){
+        if(!finishedCard){
+        setSelectedCard(true)
+    }
+    }
+    function checkAnswer(){
+        setTurnCard(true)
+    }
+    function answerButton(){
+        setSelectedCard(false)
+        setFinishedCard(true)
+    }
     return(
         <>
         {!selectCard ? ( <FaceDownCard>
         <h2>Pergunta {index+1}</h2>
-         <img src={seta_play} alt="icone flashcard triângulo"/>
+         <img onClick={seeQuestion} src={seta_play} alt="icone flashcard triângulo"/>
         </FaceDownCard>
         ):(
               <FaceUp>
-                {turnCard? (
+                {!turnCard? (
                     <>
                      {cards.question}
-                     <img src={seta_virar} alt="botão de virar"/>
+                     <img onClick={checkAnswer} src={seta_virar} alt="botão de virar"/>
                      </>
                 ):(<>
                   {cards.answer}
-              <Buttons><button>Não Lembrei</button>
-              <button>Quase Lembrei</button>
-              <button>Zap!</button></Buttons>
+              <Buttons>
+                <button onClick={answerButton}>Não Lembrei</button>
+                <button onClick={answerButton}>Quase Lembrei</button>
+                <button onClick={answerButton}>Zap!</button></Buttons>
                 </>
 
                 )}
