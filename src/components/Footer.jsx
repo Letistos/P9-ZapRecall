@@ -5,7 +5,7 @@ import { useState } from 'react';
 export default function Footer({counter}){
     return(
         <StyleFooter>
-        <h1>{counter}/{cards.length} CONCLUÍDOS</h1>
+        <h1 data-test="footer">{counter}/{cards.length} CONCLUÍDOS</h1>
         </StyleFooter>
     );
 }

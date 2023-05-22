@@ -9,7 +9,7 @@ export default function Deck(){
         
         <StyleDeck>
 
-        {cards.map((question,i)=><Card key={question.question} index={i} cards={question}/>)}
+        {cards.map((question,i)=><Card data-test="flashcard" key={question.question} index={i} cards={question}/>)}
      
         </StyleDeck>
        

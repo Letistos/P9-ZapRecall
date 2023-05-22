@@ -5,7 +5,12 @@ import seta_virar from'../assets/seta_virar.png';
 import certo from '../assets/icone_certo.png';
 import quase from '../assets/icone_quase.png';
 import erro from '../assets/icone_erro.png';
-<assets />
+import {yellow} from './Colors'
+import {orange} from './Colors'
+import {red} from './Colors'
+import {black} from './Colors'
+import {green} from './Colors'
+
 
 export default function Card({index,cards}){
     const[selectCard,setSelectedCard] = useState(false)
@@ -39,23 +44,24 @@ export default function Card({index,cards}){
     }
     return(
         <>
-        {!selectCard ? ( <FaceDownCard>
-        <h2>Pergunta {index+1}</h2>
-         <img onClick={seeQuestion} src={answerIcon()} alt="icone flashcard triângulo"/>
+        {!selectCard ? ( <FaceDownCard type={type}>
+        <h2 data-test="flashcard-text">Pergunta {index+1}</h2>
+         <img data-test="play-btn" onClick={seeQuestion} src={answerIcon()} alt="icone flashcard triângulo"/>
         </FaceDownCard>
         ):(
-              <FaceUp>
+              <FaceUp data-test="flashcard-text">
                 {!turnCard? (
                     <>
                      {cards.question}
-                     <img onClick={checkAnswer} src={seta_virar} alt="botão de virar"/>
+                     <img data-test="turn-btn" onClick={checkAnswer} src={seta_virar} alt="botão de virar"/>
                      </>
                 ):(<>
                   {cards.answer}
               <Buttons>
-                <button onClick={() => answerButton("wrong")}>Não Lembrei</button>
-                <button onClick={() => answerButton("kindOf")}>Quase Lembrei</button>
-                <button onClick={() => answerButton("right")}>Zap!</button></Buttons>
+                <ColorButton data-test="no-btn" background={red} onClick={() => answerButton("wrong")}>Não Lembrei</ColorButton>
+                <ColorButton data-test="partial-btn" background={orange} onClick={() => answerButton("kindOf")}>Quase Lembrei</ColorButton>
+                <ColorButton data-test="zap-btn" background={green} onClick={() => answerButton("right")}>Zap!</ColorButton>
+                </Buttons>
                 </>
 
                 )}
@@ -76,7 +82,20 @@ const FaceDownCard=styled.div`
     font-weight:700;
     font-size:16px;
     line-height:19.2px;
-    color:#333333;
+    color:${props => {
+
+        switch(props.type){
+            case "wrong":
+            return red
+            case "kindOf":
+            return orange
+            case "right":
+            return green
+            default:
+                return black
+            }
+    }};
+    text-decoration:${props => props.type === "seta"? "none": "line-through"};
     margin-bottom:25px;
     border-radius:5px;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
@@ -127,10 +146,12 @@ const Buttons = styled.div`
     display:flex;
     justify-content:space-between;
     
-    button{
-        background-color:red;
-        width:85.17px;
-        height:37.17px;
-        border-radius:5px;
-    }
+    
+`
+const ColorButton = styled.button`
+
+    background-color:${props => props.background};
+    width:85.17px;
+    height:37.17px;
+    border-radius:5px;
 `
