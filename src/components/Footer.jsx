@@ -1,8 +1,11 @@
 import styled from 'styled-components';
-export default function Footer(){
+import cards from './Cards.js';
+import { useState } from 'react';
+
+export default function Footer({counter}){
     return(
         <StyleFooter>
-        <h1>X/X CONCLUÍDOS</h1>
+        <h1>{counter}/{cards.length} CONCLUÍDOS</h1>
         </StyleFooter>
     );
 }
