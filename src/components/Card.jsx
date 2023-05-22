@@ -2,12 +2,16 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import seta_play from '../assets/seta_play.png';
 import seta_virar from'../assets/seta_virar.png';
+import certo from '../assets/icone_certo.png';
+import quase from '../assets/icone_quase.png';
+import erro from '../assets/icone_erro.png';
 <assets />
 
 export default function Card({index,cards}){
     const[selectCard,setSelectedCard] = useState(false)
     const[turnCard,setTurnCard] = useState(false)
     const[finishedCard,setFinishedCard] = useState(false)
+    const[type,setTypeOfAnswer] = useState("seta")
     function seeQuestion (){
         if(!finishedCard){
         setSelectedCard(true)
@@ -16,15 +20,28 @@ export default function Card({index,cards}){
     function checkAnswer(){
         setTurnCard(true)
     }
-    function answerButton(){
+    function answerButton(type){
         setSelectedCard(false)
         setFinishedCard(true)
+        setTypeOfAnswer(type)
+    }
+    function answerIcon(){
+        switch(type){
+        case "wrong":
+        return erro
+        case "kindOf":
+        return quase
+        case "right":
+        return certo
+        default:
+            return seta_play
+        }
     }
     return(
         <>
         {!selectCard ? ( <FaceDownCard>
         <h2>Pergunta {index+1}</h2>
-         <img onClick={seeQuestion} src={seta_play} alt="icone flashcard triângulo"/>
+         <img onClick={seeQuestion} src={answerIcon()} alt="icone flashcard triângulo"/>
         </FaceDownCard>
         ):(
               <FaceUp>
@@ -36,9 +53,9 @@ export default function Card({index,cards}){
                 ):(<>
                   {cards.answer}
               <Buttons>
-                <button onClick={answerButton}>Não Lembrei</button>
-                <button onClick={answerButton}>Quase Lembrei</button>
-                <button onClick={answerButton}>Zap!</button></Buttons>
+                <button onClick={() => answerButton("wrong")}>Não Lembrei</button>
+                <button onClick={() => answerButton("kindOf")}>Quase Lembrei</button>
+                <button onClick={() => answerButton("right")}>Zap!</button></Buttons>
                 </>
 
                 )}
